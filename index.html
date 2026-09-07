@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Paarvai Systems &mdash; edge AI vision &amp; camera systems engineering</title>
+
+  <title>Paarvai Systems &mdash; edge AI vision &amp; camera systems engineering</title>
+
+  <title>Paarvai Systems &mdash; edge AI vision &amp; camera systems engineering</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Paarvai Systems is an independent edge AI vision and camera systems engineering consultancy in Tamil Nadu, India. Sensor and optics selection, ISP and image quality tuning, vision model development and on-device deployment on NVIDIA Jetson AGX Thor and DGX Spark.">
+  <meta name="keywords" content="edge AI vision, camera systems engineering, ISP tuning, image quality, sensor selection, NVIDIA Jetson AGX Thor, DGX Spark, on-device inference, auto-framing, computer vision consultant India">
+  <meta name="theme-color" content="#0B1F33">
+  <link rel="canonical" href="https://paarvaisystems.in/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Paarvai Systems">
+  <meta property="og:title" content="Paarvai Systems - edge AI vision and camera systems engineering">
+  <meta property="og:description" content="Image science and neural networks under one roof. Sensor, optics and ISP work alongside vision models running on NVIDIA Jetson and DGX Spark.">
+  <meta property="og:url" content="https://paarvaisystems.in/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' rx='6' fill='%230B1F33'/%3E%3Ccircle cx='15' cy='15' r='9' fill='none' stroke='%231560B8' stroke-width='1.6'/%3E%3Cpath d='M15 10.4 18.98 12.7v4.6L15 19.6l-3.98-2.3v-4.6Z' fill='%23A9761C'/%3E%3C/svg%3E">
+  <style>
+    html{color-scheme:light dark}
+    body{margin:0;font-family:system-ui,sans-serif}
+    img{max-width:100%}
+    [hidden]{display:none!important}
+  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+<style>
+  :root{
+    --ink:#0B1F33;
+    --ink-soft:#20364B;
+    --blue:#1560B8;
+    --blue-deep:#0E4485;
+    --blue-wash:#EEF4FB;
+    --brass:#A9761C;
+    --paper:#FBFCFD;
+    --surface:#FFFFFF;
+    --line:#DCE5ED;
+    --line-strong:#C3D1DE;
+    --body:#3E5265;
+    --muted:#6A7E90;
+    --shadow:0 1px 2px rgba(11,31,51,.05), 0 8px 24px -12px rgba(11,31,51,.14);
+    --maxw:1140px;
+    --r:6px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#E9F0F7;
+      --ink-soft:#C9D8E6;
+      --blue:#63A6EE;
+      --blue-deep:#8CC0F5;
+      --blue-wash:#12283C;
+      --brass:#D9A94F;
+      --paper:#08131E;
+      --surface:#0E1F2E;
+      --line:#1E3547;
+      --line-strong:#2C4A61;
+      --body:#B0C3D3;
+      --muted:#8399AB;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#E9F0F7;
+    --ink-soft:#C9D8E6;
+    --blue:#63A6EE;
+    --blue-deep:#8CC0F5;
+    --blue-wash:#12283C;
+    --brass:#D9A94F;
+    --paper:#08131E;
+    --surface:#0E1F2E;
+    --line:#1E3547;
+    --line-strong:#2C4A61;
+    --body:#B0C3D3;
+    --muted:#8399AB;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--body);
+    font-family:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:16px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
+    color:var(--ink);
+    margin:0;
+    text-wrap:balance;
+    font-weight:600;
+    line-height:1.18;
+    letter-spacing:-.011em;
+  }
+  p{margin:0;}
+  a{color:var(--blue);text-decoration:none;}
+  a:hover{text-decoration:underline;text-underline-offset:3px;}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:3px;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:saturate(1.4) blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{display:flex;align-items:center;gap:28px;height:66px;}
+  .brand{display:flex;align-items:center;gap:11px;margin-right:auto;}
+  .brand svg{display:block;flex:0 0 auto;}
+  .brand-name{
+    font-family:"Source Serif 4",Georgia,serif;
+    font-weight:700;font-size:19px;color:var(--ink);letter-spacing:-.01em;line-height:1.1;
+  }
+  .brand-sub{
+    font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-top:1px;
+  }
+  .nav{display:flex;gap:24px;align-items:center;}
+  .nav a{font-size:14.5px;color:var(--ink-soft);font-weight:500;}
+  .nav a:hover{color:var(--blue);text-decoration:none;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-family:"IBM Plex Sans",sans-serif;font-size:14.5px;font-weight:600;
+    padding:10px 18px;border-radius:var(--r);border:1px solid transparent;
+    cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease;
+  }
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-primary:hover{background:var(--blue-deep);text-decoration:none;color:#fff;}
+  .btn-ghost{border-color:var(--line-strong);color:var(--ink);background:transparent;}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue);text-decoration:none;}
+  @media (max-width:900px){ .nav{display:none;} }
+
+  /* ---------- section scaffolding ---------- */
+  section{padding:76px 0;border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--brass);display:flex;align-items:center;gap:10px;margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--brass);flex:0 0 auto;}
+  .sec-head{max-width:64ch;margin-bottom:44px;}
+  .sec-head h2{font-size:clamp(28px,3.4vw,38px);}
+  .sec-head p{margin-top:14px;font-size:17px;color:var(--body);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 78px;}
+  .hero-grid{display:grid;grid-template-columns:1.22fr .88fr;gap:56px;align-items:start;}
+  .hero h1{font-size:clamp(33px,4.4vw,50px);letter-spacing:-.02em;}
+  .hero h1 em{font-style:normal;color:var(--blue);}
+  .hero-lede{margin-top:22px;font-size:18px;max-width:58ch;color:var(--body);}
+  .hero-rule{width:64px;height:3px;background:var(--brass);margin:26px 0 0;}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;}
+  .hero-note{
+    margin-top:22px;font-family:"IBM Plex Mono",monospace;font-size:12px;
+    color:var(--muted);letter-spacing:.02em;
+  }
+
+  .panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .panel-head{
+    padding:14px 20px;border-bottom:1px solid var(--line);background:var(--blue-wash);
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink);
+  }
+  .disc{padding:20px;}
+  .disc + .disc{border-top:1px solid var(--line);}
+  .disc-k{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--brass);display:block;margin-bottom:4px;
+  }
+  .disc h3{font-size:18px;margin-bottom:10px;}
+  .disc ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px;}
+  .disc ul li{
+    font-size:14.2px;color:var(--ink-soft);padding-left:15px;position:relative;line-height:1.5;
+  }
+  .disc ul li::before{
+    content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;
+    border-radius:50%;background:var(--blue);
+  }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;gap:38px;} }
+
+  /* ---------- services ---------- */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 40px;}
+  .svc{padding:26px 0 30px;border-top:1px solid var(--line-strong);}
+  .svc h3{font-size:19.5px;margin-bottom:10px;}
+  .svc p{font-size:15px;}
+  .svc ul{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px;}
+  .svc ul li{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.04em;
+    color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:3px 7px;
+  }
+  @media (max-width:900px){ .svc-grid{grid-template-columns:repeat(2,1fr);gap:0 32px;} }
+  @media (max-width:620px){ .svc-grid{grid-template-columns:1fr;} }
+
+  /* ---------- platform band (committed dark) ---------- */
+  .platform{
+    --p-ink:#F2F7FC;
+    --p-body:#9FB4C6;
+    --p-muted:#728BA0;
+    --p-line:#1D344A;
+    --p-blue:#66A9F0;
+    --p-brass:#DBAB52;
+    background:#08151F;border-top:1px solid #08151F;color:var(--p-body);
+  }
+  .platform h2,.platform h3{color:var(--p-ink);}
+  .platform .eyebrow{color:var(--p-brass);}
+  .platform .eyebrow::before{background:var(--p-brass);}
+  .platform .sec-head p{color:var(--p-body);}
+  .rig{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  .rig-card{
+    border:1px solid var(--p-line);border-radius:var(--r);background:#0C1D2B;overflow:hidden;
+  }
+  .rig-card header{
+    padding:18px 22px 16px;border-bottom:1px solid var(--p-line);
+    display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;
+  }
+  .rig-card h3{font-size:19px;}
+  .rig-role{
+    font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--p-brass);white-space:nowrap;
+  }
+  .spec{width:100%;border-collapse:collapse;font-size:13.6px;}
+  .spec th,.spec td{padding:9px 22px;text-align:left;vertical-align:top;}
+  .spec th{
+    font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:10.5px;
+    letter-spacing:.11em;text-transform:uppercase;color:var(--p-muted);
+    width:8.5rem;white-space:nowrap;
+  }
+  .spec td{color:var(--p-ink);font-variant-numeric:tabular-nums;}
+  .spec tr + tr th,.spec tr + tr td{border-top:1px solid var(--p-line);}
+  .rig-note{
+    margin-top:22px;font-size:12.5px;color:var(--p-muted);max-width:88ch;
+  }
+  .rig-note a{color:var(--p-blue);}
+  @media (max-width:820px){ .rig{grid-template-columns:1fr;} }
+
+  /* ---------- approach ---------- */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:28px;}
+  .step{position:relative;padding-top:30px;}
+  .step::before{content:"";position:absolute;top:9px;left:0;right:-28px;height:1px;background:var(--line);}
+  .step:last-child::before{right:0;}
+  .step .dot{position:absolute;top:5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--blue);}
+  .step .num{
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;
+    color:var(--brass);display:block;margin-bottom:7px;
+  }
+  .step h3{font-size:17px;margin-bottom:8px;}
+  .step p{font-size:14.4px;}
+  @media (max-width:940px){ .steps{grid-template-columns:repeat(2,1fr);gap:30px 28px;} }
+  @media (max-width:560px){ .steps{grid-template-columns:1fr;} .step::before{right:0;} }
+
+  /* ---------- why ---------- */
+  .why{background:var(--blue-wash);}
+  .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 48px;}
+  .why-item{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;}
+  .why-item .mark{
+    width:26px;height:26px;border-radius:50%;background:var(--surface);
+    border:1px solid var(--line-strong);display:grid;place-items:center;flex:0 0 auto;margin-top:2px;
+  }
+  .why-item .mark svg{display:block;}
+  .why-item h3{font-size:17px;margin-bottom:5px;}
+  .why-item p{font-size:14.8px;}
+  @media (max-width:760px){ .why-grid{grid-template-columns:1fr;} }
+
+  /* ---------- sectors ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:9px;}
+  .chips span{
+    border:1px solid var(--line-strong);border-radius:100px;padding:7px 15px;
+    font-size:14px;color:var(--ink-soft);background:var(--surface);
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{max-width:70ch;}
+  .about-grid p + p{margin-top:16px;}
+  .about-grid p{font-size:16.5px;}
+  .tamil{font-family:"Source Serif 4",Georgia,serif;font-size:19px;color:var(--ink);}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start;}
+  .cdetails{list-style:none;margin:0 0 26px;padding:0;}
+  .cdetails li{padding:13px 0;border-bottom:1px solid var(--line);}
+  .cdetails li:first-child{border-top:1px solid var(--line-strong);}
+  .cdetails .k{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px;
+  }
+  .cdetails .v{font-size:16px;color:var(--ink);}
+  .ph{
+    color:var(--brass);font-family:"IBM Plex Mono",monospace;font-size:14px;
+    background:color-mix(in srgb, var(--brass) 12%, transparent);
+    padding:1px 6px;border-radius:3px;
+  }
+  form{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);}
+  .field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .field label{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .field input,.field select,.field textarea{
+    font-family:inherit;font-size:15px;color:var(--ink);background:var(--paper);
+    border:1px solid var(--line-strong);border-radius:var(--r);padding:10px 12px;width:100%;
+  }
+  .field textarea{min-height:104px;resize:vertical;}
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue);
+  }
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
+  .form-note{font-size:13px;color:var(--muted);margin-top:14px;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;gap:36px;} .two{grid-template-columns:1fr;} }
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:40px 0 52px;background:var(--surface);}
+  .foot-grid{display:flex;flex-wrap:wrap;gap:24px 48px;align-items:flex-start;justify-content:space-between;}
+  .foot-links{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;}
+  .disclaimer{
+    margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--muted);max-width:100ch;line-height:1.6;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+  }
+  html{scroll-behavior:smooth;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Paarvai Systems",
+  "description": "Independent engineering consultancy for edge AI vision and camera systems. Camera architecture and feasibility, sensor and optics selection, ISP and image quality tuning, vision model development, on-device inference applications and image quality test rigs, on NVIDIA Jetson AGX Thor and DGX Spark platforms.",
+  "url": "https://paarvaisystems.in/",
+  "email": "info@paarvaisystems.in",
+  "telephone": "+91-99520-54734",
+  "foundingDate": "2026",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Ramakrishnapuram, Tambaram",
+    "addressLocality": "Chennai",
+    "addressRegion": "Tamil Nadu",
+    "addressCountry": "IN"
+  },
+  "areaServed": {"@type": "Place", "name": "Worldwide"},
+  "availableLanguage": ["Tamil", "English"],
+  "openingHours": "Mo-Sa 09:30-18:30",
+  "knowsAbout": ["Edge AI vision", "Computer vision", "Image signal processing", "ISP tuning", "Colour science", "Camera sensor selection", "Optics and MTF", "Object detection and tracking", "On-device inference", "NVIDIA Jetson AGX Thor", "NVIDIA DGX Spark", "Auto-framing", "Image quality measurement"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Edge AI vision engineering services",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Camera system architecture and feasibility"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Sensor and optics selection"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Image pipeline and image quality tuning"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Vision model development and evaluation"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "On-device inference applications"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Image quality test rigs and acceptance criteria"}}
+    ]
+  }
+}
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Paarvai Systems home">
+      <svg width="30" height="30" viewBox="0 0 30 30" role="img" aria-hidden="true">
+        <rect x="0.5" y="0.5" width="29" height="29" rx="6" fill="var(--ink)"></rect>
+        <circle cx="15" cy="15" r="9" fill="none" stroke="var(--blue)" stroke-width="1.6"></circle>
+        <path d="M15 10.4 18.98 12.7v4.6L15 19.6l-3.98-2.3v-4.6Z" fill="var(--brass)"></path>
+      </svg>
+      <span>
+        <span class="brand-name">Paarvai Systems</span>
+        <span class="brand-sub">Edge AI vision</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Talk to us</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Edge AI vision &middot; Camera systems &middot; India</div>
+        <h1>Most AI camera products fail on the <em>image</em>, not the model.</h1>
+        <div class="hero-rule"></div>
+        <p class="hero-lede">Paarvai Systems is an independent engineering practice for teams building cameras that see. We work on both halves of the problem &mdash; the optics, sensor and image pipeline that produce the pixels, and the vision models that have to make sense of them on device.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#contact">Discuss an engagement</a>
+          <a class="btn btn-ghost" href="#services">See what we do</a>
+        </div>
+        <p class="hero-note">Independent &middot; Founder-led &middot; On site and remote</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Two disciplines, one desk</div>
+        <div class="disc">
+          <span class="disc-k">01 &mdash; Image</span>
+          <h3>Getting the pixels right</h3>
+          <ul>
+            <li>Sensor and lens selection, MTF and distortion</li>
+            <li>ISP tuning &mdash; demosaic, denoise, sharpening, tone</li>
+            <li>Colour science, white balance, exposure and AE</li>
+            <li>Low light, high dynamic range, flicker and banding</li>
+          </ul>
+        </div>
+        <div class="disc">
+          <span class="disc-k">02 &mdash; Inference</span>
+          <h3>Making sense of them</h3>
+          <ul>
+            <li>Detection, tracking, segmentation, pose</li>
+            <li>Auto-framing, subject following, speaker tracking</li>
+            <li>Vision-language models running on device</li>
+            <li>On-device inference apps and latency budgets</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Services</div>
+        <h2>Where we are usually brought in</h2>
+        <p>We work as an engineering consultant to product teams &mdash; embedded in your programme for a defined scope, or on a retainer through a build. The hardware and the product stay yours.</p>
+      </div>
+      <div class="svc-grid">
+
+        <article class="svc">
+          <h3>Camera system architecture</h3>
+          <p>Early-stage feasibility for a new device: what the scene actually demands, what a given sensor and lens can deliver, where the compute and power budget lands, and which requirements are going to fight each other.</p>
+          <ul><li>Feasibility</li><li>Requirements</li><li>Budgets</li><li>Risk review</li></ul>
+        </article>
+
+        <article class="svc">
+          <h3>Sensor &amp; optics selection</h3>
+          <p>Shortlisting and bench-testing sensor and lens candidates against your real use case rather than a datasheet &mdash; resolution and MTF, low-light behaviour, rolling shutter, field of view, distortion and mounting tolerance.</p>
+          <ul><li>MTF</li><li>Low light</li><li>FOV &amp; distortion</li><li>Bench tests</li></ul>
+        </article>
+
+        <article class="svc">
+          <h3>Image pipeline &amp; IQ tuning</h3>
+          <p>ISP tuning end to end &mdash; black level, demosaic, denoise, sharpening, tone curve, colour matrix, auto exposure and white balance &mdash; tuned for how the image will actually be judged, by a viewer or by a model.</p>
+          <ul><li>ISP tuning</li><li>Colour science</li><li>AE / AWB</li><li>HDR</li></ul>
+        </article>
+
+        <article class="svc">
+          <h3>Vision models</h3>
+          <p>Detection, tracking, segmentation and pose models chosen, trained and evaluated on footage from your own camera in your own conditions &mdash; because a model that scores well on a public benchmark often does not survive your sensor.</p>
+          <ul><li>Detection</li><li>Tracking</li><li>Segmentation</li><li>Evaluation</li></ul>
+        </article>
+
+        <article class="svc">
+          <h3>On-device applications</h3>
+          <p>The application layer around the model: capture-to-display pipeline, auto-framing and subject-following behaviour, multi-model scheduling, and the latency, memory and thermal budget it all has to live inside.</p>
+          <ul><li>Auto-framing</li><li>Pipelines</li><li>Latency budget</li><li>Thermals</li></ul>
+        </article>
+
+        <article class="svc">
+          <h3>Test rigs &amp; acceptance</h3>
+          <p>Repeatable image-quality measurement so you can tell whether a change helped &mdash; chart and lighting setup, scripted capture, scored metrics, and written acceptance criteria your team keeps and runs without us.</p>
+          <ul><li>Chart setup</li><li>Scripted capture</li><li>IQ metrics</li><li>Handover docs</li></ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="platforms" class="platform">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Platforms</div>
+        <h2>Built for the current NVIDIA edge stack</h2>
+        <p>Current work targets NVIDIA's Blackwell-generation edge silicon &mdash; a DGX Spark on the desk for training, fine-tuning and evaluation, and Jetson AGX Thor as the device the result has to run on.</p>
+      </div>
+      <div class="rig">
+
+        <div class="rig-card">
+          <header>
+            <h3>NVIDIA Jetson AGX Thor</h3>
+            <span class="rig-role">On device</span>
+          </header>
+          <div style="overflow-x:auto">
+            <table class="spec">
+              <tbody>
+                <tr><th scope="row">GPU</th><td>Blackwell &mdash; 2,560 CUDA cores, 96 fifth-gen Tensor Cores</td></tr>
+                <tr><th scope="row">AI perf</th><td>Up to 2,070 TFLOPS FP4 &middot; 1,035 TOPS FP8</td></tr>
+                <tr><th scope="row">CPU</th><td>14-core Arm Neoverse</td></tr>
+                <tr><th scope="row">Memory</th><td>128 GB LPDDR5X, 276 GB/s, unified CPU + GPU</td></tr>
+                <tr><th scope="row">Partitioning</th><td>MIG, up to 7 instances for concurrent models</td></tr>
+                <tr><th scope="row">Sensors</th><td>Multi-camera input, plus audio and auxiliary sensors</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rig-card">
+          <header>
+            <h3>NVIDIA DGX Spark</h3>
+            <span class="rig-role">On the desk</span>
+          </header>
+          <div style="overflow-x:auto">
+            <table class="spec">
+              <tbody>
+                <tr><th scope="row">Silicon</th><td>GB10 Grace Blackwell Superchip</td></tr>
+                <tr><th scope="row">AI perf</th><td>Up to 1 PFLOP FP4</td></tr>
+                <tr><th scope="row">CPU</th><td>20-core Arm &mdash; 10&times; Cortex-X925, 10&times; Cortex-A725</td></tr>
+                <tr><th scope="row">Memory</th><td>128 GB LPDDR5X coherent unified, 273 GB/s</td></tr>
+                <tr><th scope="row">Storage</th><td>4 TB self-encrypting NVMe</td></tr>
+                <tr><th scope="row">Fabric</th><td>ConnectX-7 at 200 Gb/s, 10 GbE</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <p class="rig-note">Figures above are NVIDIA's published specifications for each platform, quoted for reference. Paarvai Systems also works with earlier Jetson Orin hardware and with conventional embedded Linux and USB video class camera stacks where a project calls for it.</p>
+    </div>
+  </section>
+
+  <section id="approach">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Approach</div>
+        <h2>How an engagement runs</h2>
+        <p>The order matters more than it looks. Tuning an image pipeline before the sensor and lens are settled, or training a model before there is representative footage, is how camera programmes lose months.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="dot"></span><span class="num">01</span><h3>Scope</h3><p>What the camera has to see, in what light, at what distance and frame rate &mdash; written down as measurable targets alongside the power, thermal and cost constraints.</p></div>
+        <div class="step"><span class="dot"></span><span class="num">02</span><h3>Bench</h3><p>Sensor and lens candidates on the bench under controlled lighting, with reference footage captured from each so decisions rest on your own images.</p></div>
+        <div class="step"><span class="dot"></span><span class="num">03</span><h3>Pipeline</h3><p>ISP tuning and model development run together against that footage, so image-quality choices are judged by what they do to detection accuracy, not only by eye.</p></div>
+        <div class="step"><span class="dot"></span><span class="num">04</span><h3>On device</h3><p>Ported to the target board and measured where it counts &mdash; end-to-end latency, sustained frame rate, memory headroom, power draw and thermal behaviour over a long run.</p></div>
+        <div class="step"><span class="dot"></span><span class="num">05</span><h3>Handover</h3><p>A repeatable test rig, scored acceptance criteria, tuning parameters and written rationale &mdash; so your team can carry the work forward without us.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" class="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Why Paarvai</div>
+        <h2>Image science and neural networks, under one roof</h2>
+        <p>Camera teams usually have one or the other. The failures we get called in for almost always live in the gap between them &mdash; a model blamed for a problem that started at the sensor, or an image tuned beautifully for a human eye and badly for a network.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <span class="mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.4 4.6 9 10 3.2" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <div><h3>Both sides of the lens</h3><p>A background spanning neural-engine engineering at an AI startup and professional motion-picture camera systems. Optics and inference are not two vendors here; they are one conversation.</p></div>
+        </div>
+        <div class="why-item">
+          <span class="mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.4 4.6 9 10 3.2" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <div><h3>Judged on your footage</h3><p>Every claim is tested against images from your camera in your conditions. Public benchmark numbers are a starting point, never the evidence.</p></div>
+        </div>
+        <div class="why-item">
+          <span class="mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.4 4.6 9 10 3.2" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <div><h3>Feasibility said out loud, early</h3><p>If the sensor cannot deliver what the feature needs, you hear it in week one rather than after tape-out. An honest no is the cheapest deliverable we have.</p></div>
+        </div>
+        <div class="why-item">
+          <span class="mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.4 4.6 9 10 3.2" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <div><h3>Independent of vendors</h3><p>No reseller margin, no sensor or module supplier relationships to protect. The recommendation is the one the measurements support.</p></div>
+        </div>
+        <div class="why-item">
+          <span class="mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.4 4.6 9 10 3.2" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <div><h3>Measurement you keep</h3><p>Test rigs, capture scripts and scoring are handed over as part of the work, so image quality stays a number your team can track instead of an argument.</p></div>
+        </div>
+        <div class="why-item">
+          <span class="mark" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.4 4.6 9 10 3.2" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          <div><h3>Founder-led, no handover</h3><p>The person who scopes the work is the person who does it. Small by design, which means a limited number of engagements at a time and full attention on each.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sectors">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Who we work with</div>
+        <h2>Teams building a camera into a product</h2>
+        <p>Hardware startups and product groups where the camera is the product, or close to it &mdash; typically at the point where a prototype has to become something manufacturable that behaves consistently.</p>
+      </div>
+      <div class="chips">
+        <span>AI webcams &amp; conferencing devices</span>
+        <span>Smart cameras &amp; edge vision devices</span>
+        <span>Robotics &amp; autonomous machines</span>
+        <span>Drones &amp; aerial imaging</span>
+        <span>Industrial inspection</span>
+        <span>Broadcast &amp; production technology</span>
+        <span>Retail &amp; spatial analytics</span>
+        <span>Medical &amp; scientific imaging</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">About</div>
+        <h2>Paarvai Systems</h2>
+      </div>
+      <div class="about-grid">
+        <div>
+          <p class="tamil">பார்வை &mdash; <em>paarvai</em> &mdash; means sight, or vision.</p>
+          <p>The name is literal. The practice exists because two fields that ought to be one have drifted apart: the people who know how a photograph is made, and the people who know how a network reads one. A cinema camera department spends its life on exposure, colour and what a lens does to a face. A machine-learning team spends its life on architectures, data and loss curves. When a product needs both, the seam between them is where the schedule goes.</p>
+          <p>Paarvai Systems is a sole proprietorship based in Tamil Nadu, India, founded in 2026 and drawing on a background spanning neural-engine engineering at an AI startup and professional motion-picture camera systems. We work with product teams as an engineering consultant &mdash; the hardware, the IP and the roadmap remain theirs.</p>
+          <p>Current work is on edge AI camera devices built around NVIDIA's Blackwell-generation Jetson and DGX Spark platforms. If you are early enough that the sensor is not yet chosen, that is the best time to talk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Contact</div>
+        <h2>Start with the hard question</h2>
+        <p>Tell us what the camera has to do and what is currently in the way. You will get an honest read on feasibility and on what it would take &mdash; including if the answer is that you do not need us.</p>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <ul class="cdetails">
+            <li><span class="k">Email</span><span class="v"><a href="mailto:info@paarvaisystems.in">info@paarvaisystems.in</a></span></li>
+            <li><span class="k">Phone</span><span class="v"><a href="tel:+919952054734">+91 99520 54734</a></span></li>
+            <li><span class="k">Office</span><span class="v">Ramakrishnapuram, Tambaram,<br>Chennai, Tamil Nadu, India</span></li>
+            <li><span class="k">Hours</span><span class="v">Monday&ndash;Saturday, 9:30 AM &ndash; 6:30 PM IST</span></li>
+          </ul>
+        </div>
+        <form id="enquiry">
+          <div class="two">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" required></div>
+            <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" type="text"></div>
+          </div>
+          <div class="two">
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" required></div>
+            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel"></div>
+          </div>
+          <div class="field">
+            <label for="f-interest">What do you need help with?</label>
+            <select id="f-interest" name="interest">
+              <option>Camera system architecture &amp; feasibility</option>
+              <option>Sensor &amp; optics selection</option>
+              <option>Image pipeline / ISP tuning</option>
+              <option>Vision model development</option>
+              <option>On-device deployment (Jetson)</option>
+              <option>Image-quality test rig &amp; acceptance</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-msg">The problem</label>
+            <textarea id="f-msg" name="message" placeholder="What the camera has to do, the platform you are on, and where the programme is today."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%">Send enquiry</button>
+          <p class="form-note" id="form-note">This opens your email app with the details filled in. You can also write directly to <a href="mailto:info@paarvaisystems.in">info@paarvaisystems.in</a>.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-right:0">
+          <svg width="26" height="26" viewBox="0 0 30 30" role="img" aria-hidden="true">
+            <rect x="0.5" y="0.5" width="29" height="29" rx="6" fill="var(--ink)"></rect>
+            <circle cx="15" cy="15" r="9" fill="none" stroke="var(--blue)" stroke-width="1.6"></circle>
+            <path d="M15 10.4 18.98 12.7v4.6L15 19.6l-3.98-2.3v-4.6Z" fill="var(--brass)"></path>
+          </svg>
+          <span><span class="brand-name">Paarvai Systems</span><span class="brand-sub">paarvaisystems.in</span></span>
+        </div>
+      </div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#services">Services</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#approach">Approach</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="mailto:info@paarvaisystems.in">info@paarvaisystems.in</a>
+      </nav>
+    </div>
+    <p class="disclaimer">&copy; 2026 Paarvai Systems, a sole proprietorship registered in Tamil Nadu, India. Paarvai Systems is an independent engineering consultancy. NVIDIA, Jetson, Jetson AGX Thor, Jetson Orin, DGX Spark, Grace, Blackwell and CUDA are trademarks of NVIDIA Corporation, referenced here only to describe the platforms we work on; Paarvai Systems is not affiliated with, endorsed by or a partner of NVIDIA Corporation. All other product names are the property of their respective owners.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('enquiry').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target;
+    var g = function (n) { return (f.elements[n] && f.elements[n].value || '').trim(); };
+    var body = [
+      'Name: ' + g('name'),
+      'Company: ' + g('company'),
+      'Email: ' + g('email'),
+      'Phone: ' + g('phone'),
+      'Interest: ' + g('interest'),
+      '',
+      g('message')
+    ].join('\n');
+    var href = 'mailto:info@paarvaisystems.in'
+      + '?subject=' + encodeURIComponent('Enquiry from ' + (g('company') || g('name') || 'website'))
+      + '&body=' + encodeURIComponent(body);
+    window.location.href = href;
+    document.getElementById('form-note').textContent =
+      'Your email app should now be open with this enquiry ready to send. If nothing happened, write to info@paarvaisystems.in instead.';
+  });
+</script>
+</body>
+</html>
